@@ -1,3 +1,5 @@
+# Learn how to set up Cypress in your CI environment
+# https://on.cypress.io/ci
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
