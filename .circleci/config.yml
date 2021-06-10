@@ -5,4 +5,6 @@ workflows:
   build:
     jobs:
       - cypress/run:
+          post-install:
+            - run: npx cypress info
           start: 'npm start'
