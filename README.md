@@ -20,7 +20,7 @@ npm install
 Host the app locally at [`localhost:8080`](http://localhost:8080):
 
 ```sh
-npm start
+npm run start
 ```
 
 ## E2E Tests
@@ -28,13 +28,13 @@ npm start
 Run the [Cypress](https://cypress.io) tests:
 
 ```sh
-npm cy:open
+npm run cy:open
 ```
 
 or
 
 ```sh
-npm cy:run
+npm run cy:run
 ```
 
 ## License
