@@ -147,7 +147,6 @@
 
     .photo p {
       color: var(--pink-200);
-      background-color: rgba(255, 255, 255, 0.85);
       margin: 0;
       font-size: 0.8rem;
       font-weight: lighter;
@@ -156,6 +155,35 @@
       bottom: 1.25rem;
       right: 1.25rem;
       padding: 0.5rem;
+    }
+
+    .photo p,
+    .delete-btn {
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+
+    .delete-btn {
+      display: none;
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      color: var(--white);
+      background-color: rgba(255, 26, 79, 0.85);
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+      font-weight: lighter;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .photo:hover .delete-btn {
+      display: block;
+    }
+
+    .empty-album-message {
+      padding: 4rem;
+      color: var(--black);
+      text-align: center;
     }
   </style>
 </head>
@@ -169,38 +197,47 @@
     </header>
     <div class="photos-container">
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/cy.svg" alt="photo of Blair" />
         <p>👍 Likes: <span class="like-count">5</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/djks.svg" alt="photo of Morgan" />
         <p>👍 Likes: <span class="like-count">2</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/three.svg" alt="photo of Taylor" />
         <p>👍 Likes: <span class="like-count">9</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/qwerty.svg" alt="photo of Blair" />
         <p>👍 Likes: <span class="like-count">8</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/3dj2ks.svg" alt="photo of Morgan" />
         <p>👍 Likes: <span class="like-count">0</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/928123.svg" alt="photo of Taylor" />
         <p>👍 Likes: <span class="like-count">1</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/q2we4y.svg" alt="photo of Blair" />
         <p>👍 Likes: <span class="like-count">0</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/87d2ks.svg" alt="photo of Morgan" />
         <p>👍 Likes: <span class="like-count">0</span></p>
       </div>
       <div class="photo">
+        <button class="delete-btn">Delete</button>
         <img src="https://avatars.dicebear.com/api/human/kjlm23.svg" alt="photo of Taylor" />
         <p>👍 Likes: <span class="like-count">1</span></p>
       </div>
@@ -211,5 +248,32 @@
       </a>
     </footer>
   </main>
+  <script>
+    function onClickDelete(e) {
+      const photo = e.target.closest('.photo')
+      photo.remove()
+
+      const count = document.querySelectorAll('.photo').length
+      console.log('count: ', count);
+      if (!count) {
+        document.querySelector('header').insertAdjacentHTML('afterend', createEmptyAlbumTemplate())
+      }
+    }
+
+    function createEmptyAlbumTemplate() {
+      return `
+      <div class="empty-album-message">
+        <h2>
+          You don't have any photos in this album.
+        </h2>
+        <a href="/">Go Back</a>
+      </div>
+      `
+    }
+
+    Array.from(document.querySelectorAll('.delete-btn'), (btn) => {
+      btn.addEventListener('click', onClickDelete)
+    })
+  </script>
 </body>
 </html>
