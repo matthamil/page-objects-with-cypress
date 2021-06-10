@@ -1,10 +1,10 @@
 # Page Objects with Cypress
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/fa20f8a0-10e6-4e24-940e-8269f076c51b/deploy-status)](https://app.netlify.com/sites/awesome-einstein-515267/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fa20f8a0-10e6-4e24-940e-8269f076c51b/deploy-status)](https://app.netlify.com/sites/pageobjectswithcypress/deploys)
 
 This is the source code for the blog post "Page Objects with Cypress."
 
-[Demo](https://awesome-einstein-515267.netlify.app/)
+[Demo](https://pageobjectswithcypress.netlify.app/)
 
 ## Installation
 
