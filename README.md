@@ -21,3 +21,17 @@ Host the app locally at [`localhost:8080`](http://localhost:8080):
 ```sh
 npm start
 ```
+
+## Run the Tests
+
+Run the Cypress tests:
+
+```sh
+npm cy:open
+```
+
+or
+
+```sh
+npm cy:run
+```

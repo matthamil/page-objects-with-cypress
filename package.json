@@ -1,15 +1,17 @@
 {
   "name": "page-objects-with-cypress",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Page Objects with Cypress example",
+  "main": "index.html",
   "scripts": {
     "start": "npx http-server .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["cypress", "e2e", "page-objects"],
+  "author": "Matt Hamil",
+  "license": "MIT",
   "devDependencies": {
     "cypress": "^7.5.0"
   }
