@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Objects with Cypress</title>
+  <style>
+    :root {
+      --pink-100: #f72585; 
+      --pink-200: #b5179e;
+      --purple-100: #7209b7; 
+      --purple-200: #560bad;
+      --purple-300: #480ca8;
+      --purple-400: #3a0ca3;
+      --blue-100: #4cc9f0;
+      --blue-200: #4895ef;
+      --blue-300: #4361ee;
+      --blue-400: #3f37c9;
+      --black: #2D2D2D;
+      --white: #fff;
+      --gray-100: #f2f3ff;
+      --gray-300: #c2c4d3;
+      --app-max-width: 720px;
+    }
+
+    html {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      background-color: var(--gray-100);
+      font-family: sans-serif;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    main {
+      position: relative;
+      max-width: var(--app-max-width);
+      margin: 0 auto;
+      height: 100%;
+      background-color: var(--white);
+      box-shadow: 2px 2px 16px var(--gray-300);
+    }
+
+    header {
+      background: linear-gradient(0.25turn, var(--purple-400), var(--purple-100));
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header, footer {
+      padding: 1rem 4rem;
+    }
+
+    footer {
+      background-color: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    footer img {
+      max-height: 2rem;
+    }
+
+    h1 {
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: bold;
+      display: block;
+    }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 2rem;
+      width: 2rem;
+      padding: 0.25em;
+      border-radius: 50%;
+      background-color: var(--gray-100);
+    }
+
+    .avatar img {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    .photos-container {
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 4rem 4rem 4rem;
+      max-width: 720px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 12px 12px;
+      grid-auto-flow: row;
+    }
+
+    .photo {
+      position: relative;
+      max-width: 200px;
+      background-color: var(--gray-100);
+      border: 2px solid var(--gray-300);
+      padding: 1rem;
+      box-shadow: 2px 2px 16px var(--gray-300);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border 0.1s, box-shadow 0.1s;
+    }
+
+    .photo img {
+      padding: 2rem;
+      background: linear-gradient(var(--blue-300), var(--blue-100));
+    }
+
+    .photo:hover {
+      background-color: var(--white);
+      border: 2px solid var(--blue-200);
+      box-shadow: 0px 0px 1rem var(--blue-100);
+      cursor: pointer;
+    }
+
+    .photo:hover p {
+      background-color: var(--white);
+    }
+
+    .photo img {
+      transition: padding 0.1s;
+      transition-timing-function: ease-out;
+    }
+
+    .photo:hover img {
+      padding: 2.25rem;
+    }
+
+    .photo-container {
+      position: relative;
+    }
+
+    .photo p {
+      color: var(--pink-200);
+      background-color: rgba(255, 255, 255, 0.85);
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: lighter;
+      position: absolute;
+      letter-spacing: 0.5px;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>My Photos</h1>
+      <div class="avatar">
+        <img src="https://avatars.dicebear.com/api/human/hgzwwq8.svg" alt="Your Avatar" />
+      </div>
+    </header>
+    <div class="photos-container">
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/cy.svg" alt="photo of Blair" />
+        <p>👍 Likes: <span class="like-count">5</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/djks.svg" alt="photo of Morgan" />
+        <p>👍 Likes: <span class="like-count">2</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/three.svg" alt="photo of Taylor" />
+        <p>👍 Likes: <span class="like-count">9</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/qwerty.svg" alt="photo of Blair" />
+        <p>👍 Likes: <span class="like-count">8</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/3dj2ks.svg" alt="photo of Morgan" />
+        <p>👍 Likes: <span class="like-count">0</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/928123.svg" alt="photo of Taylor" />
+        <p>👍 Likes: <span class="like-count">1</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/q2we4y.svg" alt="photo of Blair" />
+        <p>👍 Likes: <span class="like-count">0</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/87d2ks.svg" alt="photo of Morgan" />
+        <p>👍 Likes: <span class="like-count">0</span></p>
+      </div>
+      <div class="photo">
+        <img src="https://avatars.dicebear.com/api/human/kjlm23.svg" alt="photo of Taylor" />
+        <p>👍 Likes: <span class="like-count">1</span></p>
+      </div>
+    </div>
+    <footer>
+      <a href="https://cypress.io/" target="_blank">
+        <img src="/img/cypress-logo.png" alt="Cypress.io" />
+      </a>
+    </footer>
+  </main>
+</body>
+</html>
