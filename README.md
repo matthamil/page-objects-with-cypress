@@ -22,9 +22,9 @@ Host the app locally at [`localhost:8080`](http://localhost:8080):
 npm start
 ```
 
-## Run the Tests
+## E2E Tests
 
-Run the Cypress tests:
+Run the [Cypress](https://cypress.io) tests:
 
 ```sh
 npm cy:open
