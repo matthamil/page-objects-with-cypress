@@ -195,51 +195,6 @@
       </div>
     </header>
     <div class="photos-container">
-      <div class="photo" data-cy="1">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/cy.svg" alt="photo of Blair" />
-        <p>👍 Likes: <span class="likes">5</span></p>
-      </div>
-      <div class="photo" data-cy="2">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/djks.svg" alt="photo of Morgan" />
-        <p>👍 Likes: <span class="likes">2</span></p>
-      </div>
-      <div class="photo" data-cy="3">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/three.svg" alt="photo of Taylor" />
-        <p>👍 Likes: <span class="likes">9</span></p>
-      </div>
-      <div class="photo" data-cy="4">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/qwerty.svg" alt="photo of Blair" />
-        <p>👍 Likes: <span class="likes">8</span></p>
-      </div>
-      <div class="photo" data-cy="5">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/3dj2ks.svg" alt="photo of Morgan" />
-        <p>👍 Likes: <span class="likes">0</span></p>
-      </div>
-      <div class="photo" data-cy="6">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/928123.svg" alt="photo of Taylor" />
-        <p>👍 Likes: <span class="likes">1</span></p>
-      </div>
-      <div class="photo" data-cy="7">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/q2we4y.svg" alt="photo of Blair" />
-        <p>👍 Likes: <span class="likes">0</span></p>
-      </div>
-      <div class="photo" data-cy="8">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/87d2ks.svg" alt="photo of Morgan" />
-        <p>👍 Likes: <span class="likes">0</span></p>
-      </div>
-      <div class="photo" data-cy="9">
-        <button class="delete-btn">Delete</button>
-        <img src="https://avatars.dicebear.com/api/human/kjlm23.svg" alt="photo of Taylor" />
-        <p>👍 Likes: <span class="likes">1</span></p>
-      </div>
     </div>
     <footer>
       <a href="https://cypress.io/" target="_blank">
@@ -248,31 +203,122 @@
     </footer>
   </main>
   <script>
-    function onClickDelete(e) {
-      const photo = e.target.closest('.photo')
-      photo.remove()
-
-      const count = document.querySelectorAll('.photo').length
-      console.log('count: ', count);
-      if (!count) {
-        document.querySelector('header').insertAdjacentHTML('afterend', createEmptyAlbumTemplate())
+    class Template {
+      createPhoto(photo, index) {
+        return `
+          <div class="photo" data-cy="${index}">
+            <button class="delete-btn">Delete</button>
+            <img src="${photo.url}" alt="${photo.alt}" />
+            <p>👍 Likes: <span class="likes">${photo.likes}</span></p>
+          </div>
+        `
+      }
+      createEmptyMessage() {
+        return `
+          <div class="empty-album-message">
+            <h2>
+              You don't have any photos in this album.
+            </h2>
+            <a href="/">Go Back</a>
+          </div>
+        `
       }
     }
 
-    function createEmptyAlbumTemplate() {
-      return `
-      <div class="empty-album-message">
-        <h2>
-          You don't have any photos in this album.
-        </h2>
-        <a href="/">Go Back</a>
-      </div>
-      `
+    class View {
+      constructor(template) {
+        this._template = template
+        this._root = document.querySelector('.photos-container')
+        this._header = document.querySelector('header')
+      }
+
+      _showEmptyMessage() {
+        document.querySelectorAll('.photo').forEach(($photo) => {
+          $photo.remove()
+        })
+        this._header.insertAdjacentHTML('afterend', this._template.createEmptyMessage())
+      }
+
+      _addDeleteListeners() {          
+        const onClickDelete = (e) => {
+          const photo = e.target.closest('.photo')
+          photo.remove()
+
+          const count = document.querySelectorAll('.photo').length
+          if (!count) {
+            this._showEmptyMessage()
+          }
+        }
+
+        Array.from(document.querySelectorAll('.delete-btn'), (btn) => {
+          btn.addEventListener('click', onClickDelete)
+        })
+      }
+
+      set photos(photos) {
+        this.render(photos)
+      }
+
+      render(photos) {
+        if (photos && photos.length) {
+          this._root.innerHTML = photos.map(this._template.createPhoto).join('')
+          this._addDeleteListeners()
+          return
+        }
+        this._showEmptyMessage()
+      }
     }
 
-    Array.from(document.querySelectorAll('.delete-btn'), (btn) => {
-      btn.addEventListener('click', onClickDelete)
-    })
+    const photos = [
+      {
+        url: 'https://avatars.dicebear.com/api/human/cy.svg',
+        alt: 'photo of Blair',
+        likes: 5
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/djks.svg',
+        alt: 'photo of Morgan',
+        likes: 3
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/three.svg',
+        alt: 'photo of Taylor',
+        likes: 2
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/qwerty.svg',
+        alt: 'photo of Brooklyn',
+        likes: 9
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/3dj2ks.svg',
+        alt: 'photo of Dakota',
+        likes: 8
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/928123.svg',
+        alt: 'photo of Adrian',
+        likes: 2
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/q2we4y.svg',
+        alt: 'photo of Parker',
+        likes: 1
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/87d2ks.svg',
+        alt: 'photo of Peyton',
+        likes: 0
+      },
+      {
+        url: 'https://avatars.dicebear.com/api/human/kjlm23.svg',
+        alt: 'photo of Tristan',
+        likes: 6
+      }
+    ]
+
+    window.app = new View(new Template())
+    window.app.photos = photos
   </script>
 </body>
 </html>
