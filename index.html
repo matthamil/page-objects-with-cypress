@@ -206,7 +206,7 @@
     class Template {
       createPhoto(photo, index) {
         return `
-          <div class="photo" data-cy="${index}">
+          <div class="photo" data-cy="${index + 1}">
             <button class="delete-btn">Delete</button>
             <img src="${photo.url}" alt="${photo.alt}" />
             <p>👍 Likes: <span class="likes">${photo.likes}</span></p>
