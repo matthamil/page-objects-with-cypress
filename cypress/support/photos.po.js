@@ -11,3 +11,9 @@ export const deletePhoto = (index) =>
   getPhotoByTestId(index).within(() => {
     cy.get('.delete-btn').click()
   })
+
+export const deleteAllPhotos = () => {
+  cy.window().then(({ app }) => {
+    app.photos = []
+  })
+}

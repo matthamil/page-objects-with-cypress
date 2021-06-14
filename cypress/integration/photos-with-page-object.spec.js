@@ -2,7 +2,8 @@ import {
   getPhotos,
   getPhotoByTestId,
   getLikes,
-  deletePhoto
+  deletePhoto,
+  deleteAllPhotos
 } from '../support/photos.po'
 
 beforeEach(() => {
@@ -25,12 +26,7 @@ it('should allow the user to delete a photo', () => {
 })
       
 it('should display a message when no photos exist in the album', () => {
-	// remove all photos
-	cy.get('.photo').each(($photo) => {
-	  cy.wrap($photo).within(() => {
-	    cy.get('.delete-btn').click()
-	  })
-	})
+	deleteAllPhotos()
 	const MESSAGE = "You don't have any photos in this album."
 	cy.contains(MESSAGE)
 })
